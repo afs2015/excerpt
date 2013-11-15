@@ -1,14 +1,12 @@
 <?php
 /*
-Plugin Name: Excerpt
-Plugin URI: https://github.com/afs2015/excerpt
+Plugin Name: Img Excerpt
+Plugin URI: https://github.com/afs2015/img_excerpt
 Version: 1.0
 Author: Andrew Selzer
 Description: Allows one to post short excerpts of text.
 */
-?>
 
-<?php
 /*  Copyright 2013 Andrew Selzer  (email : andrewfselzer@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
@@ -25,8 +23,7 @@ Description: Allows one to post short excerpts of text.
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-<?php 
-function trim_content( $limit ) {
+function afs_trim_content( $limit ) {
   $content = explode( ' ', get_the_content(), $limit );
   
   if ( count( $content ) >= $limit ) {
@@ -39,6 +36,12 @@ function trim_content( $limit ) {
   $content = preg_replace('/\[.+\]/','', $content);
   $content = apply_filters('the_content', $content); 
 
-  return $content;
+  $content = sprintf(
+            '<img class="post-icon" src="%s/img/house.png" alt="Post icon" title=""/>%s',
+            get_bloginfo( 'stylesheet_directory' ),
+            $content
+        );
+
+  return $content.'[...]';; 
 }
 ?>
